@@ -8,12 +8,12 @@ type NoteFormProps = {
     onSubmit : (data: NoteData) => void
     onAddTag: (tag: Tag) =>void
     availableTags: Tag[]
-}
+}& Partial<NoteData>
 
-export const NoteForm = ({onSubmit,onAddTag,availableTags}:NoteFormProps) => {
+export const NoteForm = ({onSubmit,onAddTag,availableTags, title="", markdown="", tags= [],}:NoteFormProps) => {
     const titleRef = useRef<HTMLInputElement>(null)  
     const markdownRef = useRef<HTMLTextAreaElement>(null)
-    const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+    const [selectedTags, setSelectedTags] = useState<Tag[]>(tags)
     const navigate = useNavigate()
 
     function handleSubmit(e: FormEvent){
@@ -36,7 +36,7 @@ export const NoteForm = ({onSubmit,onAddTag,availableTags}:NoteFormProps) => {
             <label className="block text-gray-700 text-sm font-bold mb-2" >
                 Title
             </label>
-            <input ref={titleRef} required className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" placeholder="Title"/>
+            <input ref={titleRef} defaultValue={title} required className="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="title" type="text" placeholder="Title"/>
             </div> 
             <div className="m-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" >
@@ -65,7 +65,7 @@ export const NoteForm = ({onSubmit,onAddTag,availableTags}:NoteFormProps) => {
             <label className="block text-gray-700 text-sm font-bold mb-2" >
                 Body
             </label>
-            <textarea ref={markdownRef} required className="w-full h-[400px] shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="body" />
+            <textarea ref={markdownRef} defaultValue={markdown} required className="w-full h-[400px] shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="body" />
             </div>
             
             <div className="m-4 flex items-center justify-end">
